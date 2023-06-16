@@ -1,0 +1,45 @@
+buildscript {
+    ext {
+        springBootVersion = '2.4.1'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.jetbrains:annotations:24.0.1'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    // lombok
+    annotationProcessor 'org.projectlombok:lombok'
+    implementation 'org.projectlombok:lombok'
+    // Spring data Jpa : 스프링부트용 spring data jpa 추상화 라이브러리 (스프링부트 버전에 맞게 자동으로 버전을 관리함)
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    // 스프링 시큐리티 임의로 인증된 사용자를 추가하여 API TEST
+    testImplementation 'org.springframework.security:spring-security-test'
+    implementation 'org.apache.httpcomponents:httpclient:4.5.14'
+    // 인메모리 관계형 데이터베이스 (메모리에서 실행 -> 어플리케이션 재시작마다 초기화)
+    implementation 'com.h2database:h2'
+    // 세션 저장소로 DB 사용
+    implementation 'org.springframework.session:spring-session-jdbc'
+}
+
+group 'com.hy.webTest'
+version '1.0-SNAPSHOT'
+
+test {
+    useJUnitPlatform()
+}
