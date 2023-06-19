@@ -37,7 +37,7 @@ dependencies {
     implementation 'org.springframework.session:spring-session-jdbc'
 }
 
-group 'com.hy.webTest'
+group 'com.hy.springboot'
 version '1.0-SNAPSHOT'
 
 test {

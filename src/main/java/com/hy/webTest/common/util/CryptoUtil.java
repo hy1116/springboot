@@ -1,11 +1,15 @@
 package com.hy.webTest.common.util;
 
 import com.hy.webTest.common.util.KISA_SEED_CBC;
+import com.hy.webTest.web.CouponRequestDto;
 import org.apache.commons.codec.binary.Base64;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+import javax.transaction.Transactional;
+import java.util.Map;
+import java.util.function.Function;
 
 public class CryptoUtil {
     // AES-256/SEED128
@@ -44,5 +48,12 @@ public class CryptoUtil {
         byte[] decodedBytes = Base64.decodeBase64(str);
         byte[] decrypted = cipher.doFinal(decodedBytes);
         return new String(decrypted, "UTF-8");
+    }
+
+    public static Map<String,String> encryptMapValues(Map<String, String> map) throws Exception{
+        for(Map.Entry<String,String> e : map.entrySet()){
+            e.setValue(encryptAes(e.getValue()));
+        }
+        return map;
     }
 }
