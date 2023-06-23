@@ -8,9 +8,13 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.client.ClientHttpRequest;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.client.RequestCallback;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -33,13 +37,8 @@ public class HttpUtilTest {
     private MockMvc mvc;
 
     @Test
-    public void test_gsmbizTest() throws Exception {
-
-        // when
-        //String resString = HttpClientUtil.doHttpPostHeaderJson(url,headerMap,jo.toString());
-
-        // then
-        //assertThat(resString).isNotNull();
+    public void test_httpGet() throws Exception {
+        String url = "t2api.thankqpon.com";
 
     }
 }

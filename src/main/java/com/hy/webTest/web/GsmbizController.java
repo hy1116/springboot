@@ -20,7 +20,8 @@ public class GsmbizController {
     @PostMapping("/gsmbiz/issue")
     public String gsmbizIssue() throws Exception {
 
-        CouponRequestDto info = couponRequestService.getGsmbizRequestInfo();
+        String res = couponRequestService.getGsmbizIssueRequest();
+        System.out.println(res);
 
         return "gsmbiz-issue";
     }

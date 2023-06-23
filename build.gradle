@@ -35,6 +35,13 @@ dependencies {
     implementation 'com.h2database:h2'
     // 세션 저장소로 DB 사용
     implementation 'org.springframework.session:spring-session-jdbc'
+    // JSONObject
+    // https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
+    // implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+
+    // JSONTokener 사용을 위해 추가
+    // https://mvnrepository.com/artifact/org.json/json/20230227
+    implementation group: 'org.json', name: 'json', version: '20230227'
 }
 
 group 'com.hy.springboot'

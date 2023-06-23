@@ -5,6 +5,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.entity.StringEntity;
@@ -48,7 +49,77 @@ public class HttpClientUtil {
         return client;
     }
 
-    public static synchronized String doHttpPostHeaderJson(String _url, Map<String,String> _heads , String _data) throws Exception{
+    public static synchronized String doHttpGet(String _url) throws Exception{
+        HttpClient client = getClient();
+
+        // URL 및 method 설정
+        HttpGet method = new HttpGet(_url);
+
+        String responseBody;
+        try {
+            // Request 요청
+            HttpResponse response = client.execute(method);
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode == HttpStatus.SC_OK || statusCode == HttpStatus.SC_CREATED) {
+                HttpEntity entity = response.getEntity();
+                //인코딩 방식에 따른 한글 깨짐 방지
+                InputStream resStream = entity.getContent();
+                BufferedReader br = new BufferedReader(new InputStreamReader(resStream));
+                StringBuffer resBuffer = new StringBuffer();
+                String resTemp;
+                while((resTemp = br.readLine()) != null){
+                    resBuffer.append(resTemp);
+                }
+                responseBody = resBuffer.toString();
+            }else{
+                throw new Exception("HTTPCLIENT ERROR : " + response.getStatusLine());
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            method.releaseConnection();
+        }
+        return responseBody;
+    }
+
+    public static synchronized String doHttpPostJson(String _url , String _data) throws Exception{
+        HttpClient client = getClient();
+
+        // URL 및 method 설정
+        HttpPost method = new HttpPost(_url);
+
+        // request 파라미터 셋팅
+        StringEntity reqEntity = new StringEntity(_data);
+        method.setEntity(reqEntity);
+
+        String responseBody;
+        try {
+            // Request 요청
+            HttpResponse response = client.execute(method);
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode == HttpStatus.SC_OK || statusCode == HttpStatus.SC_CREATED) {
+                HttpEntity entity = response.getEntity();
+                //인코딩 방식에 따른 한글 깨짐 방지
+                InputStream resStream = entity.getContent();
+                BufferedReader br = new BufferedReader(new InputStreamReader(resStream));
+                StringBuffer resBuffer = new StringBuffer();
+                String resTemp;
+                while((resTemp = br.readLine()) != null){
+                    resBuffer.append(resTemp);
+                }
+                responseBody = resBuffer.toString();
+            }else{
+                throw new Exception("HTTPCLIENT ERROR : " + response.getStatusLine());
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            method.releaseConnection();
+        }
+        return responseBody;
+    }
+
+    public static synchronized String doHttpPostJson(String _url, Map<String,String> _heads , String _data) throws Exception{
         HttpClient client = getClient();
 
         // URL 및 method 설정
@@ -64,7 +135,7 @@ public class HttpClientUtil {
 
         String responseBody;
         try {
-            // Request요청
+            // Request 요청
             HttpResponse response = client.execute(method);
             int statusCode = response.getStatusLine().getStatusCode();
             if (statusCode == HttpStatus.SC_OK || statusCode == HttpStatus.SC_CREATED) {
