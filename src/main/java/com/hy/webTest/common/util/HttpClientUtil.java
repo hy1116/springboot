@@ -12,7 +12,6 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.ssl.SSLContexts;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -20,12 +19,11 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Map;
 
-@RestController
 public class HttpClientUtil {
     private final static int connectionTimeout 	= 10000;
     private final static int soTimeout 			= 10000;
 
-    public static HttpClient getClient(){
+    private static HttpClient getClient(){
         // Timeout
         RequestConfig config = RequestConfig.custom()
                 .setConnectTimeout(connectionTimeout)
